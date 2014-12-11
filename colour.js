@@ -12,6 +12,9 @@
 function hexToRgb(hex) {
     'use strict';
 
+    // convert to string
+    hex = hex + '';
+
     var shorthandRegex, result;
     // Expand shorthand form (e.g. "04F") to full form (e.g. "0033FF")
     shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
@@ -53,6 +56,29 @@ function componentToHex(c) {
 */
 function rgbToHex(r, g, b) {
     'use strict';
+    r = parseInt(r, 10) || 0;
+    if(r > 255) {
+        r = 255;
+    }
+    if(r < 0) {
+        r = 0;
+    }
+
+    g = parseInt(g, 10) || 0;
+    if(g > 255) {
+        g = 255;
+    }
+    if(g < 0) {
+        g = 0;
+    }
+
+    b = parseInt(b, 10) || 0;
+    if(b > 255) {
+        b = 255;
+    }
+    if(b < 0) {
+        b = 0;
+    }
     return "#" + componentToHex(r) + componentToHex(g) + componentToHex(b);
 }
 
