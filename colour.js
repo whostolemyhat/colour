@@ -95,6 +95,30 @@ function rgbToHex(r, g, b) {
 function checkLuminance(r, g, b) {
     //http://stackoverflow.com/questions/12043187/how-to-check-if-hex-color-is-too-black
     'use strict';
+    r = parseInt(r, 10) || 0;
+    if(r > 255) {
+        r = 255;
+    }
+    if(r < 0) {
+        r = 0;
+    }
+
+    g = parseInt(g, 10) || 0;
+    if(g > 255) {
+        g = 255;
+    }
+    if(g < 0) {
+        g = 0;
+    }
+
+    b = parseInt(b, 10) || 0;
+    if(b > 255) {
+        b = 255;
+    }
+    if(b < 0) {
+        b = 0;
+    }
+
     var luma = 0.2126 * r + 0.7152 * g + 0.0722 * b; // per ITU-R BT.709
     return luma;
 }
