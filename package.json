@@ -1,0 +1,21 @@
+{
+  "name": "colour",
+  "version": "1.0.0",
+  "description": "Colour transformation utilities",
+  "main": "colour.js",
+  "dependencies": {
+    "prompt": "^0.2.14",
+    "lodash": "^2.4.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "mocha"
+  },
+  "keywords": [
+    "utility",
+    "colour",
+    "color"
+  ],
+  "author": "whostolemyhat",
+  "license": "MIT"
+}
