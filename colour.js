@@ -134,7 +134,10 @@ function checkLuminance(r, g, b) {
 function checkLuminanceHex(hex) {
     'use strict';
     var rgb = hexToRgb(hex);
-    return checkLuminance(rgb.r, rgb.g, rgb.b);
+    if(rgb) {
+        return checkLuminance(rgb.r, rgb.g, rgb.b);
+    }
+    return null;
 }
 
 
@@ -150,14 +153,14 @@ function checkLuminanceHex(hex) {
 function alterShade(hex, lum) {
     'use strict';
 
-    // strip hex to make sure only numbers
+    // strip hex to make sure hexadecimal
     hex = String(hex).replace(/[^0-9a-f]/gi, '');
     // make sure always 6 digits
     if(hex.length < 6) {
         hex = hex[0] + hex[0] + hex[1] + hex[1] + hex[2] + hex[2];
     }
 
-    lum = lum || 0;
+    lum = parseFloat(lum, 10) || 0;
 
     var rgb = '#';
     var c;

@@ -66,7 +66,7 @@ describe('colour', function() {
             assert.equal(typeof colour.checkLuminance(255, 255, 255), 'number');
         });
 
-        it('should give luminance value', function() {
+        it('should calculate luminance value', function() {
             assert.equal(colour.checkLuminance(255, 255, 255), 254.99999999999997);
             assert.equal(colour.checkLuminance(0, 0, 0), 0);
             assert.equal(colour.checkLuminance(126, 255, 0), 209.16359999999997);
@@ -88,6 +88,83 @@ describe('colour', function() {
             assert.equal(colour.checkLuminance('255', '255', '255'), 254.99999999999997);
             assert.equal(colour.checkLuminance('0', '0', '0'), 0);
             assert.equal(colour.checkLuminance('chucknorris', 'nonsense', 'fail'), 0);
+        });
+    });
+
+    describe('checkLuminanceHex', function() {
+        it('should return a number', function() {
+            assert.equal(typeof colour.checkLuminanceHex('#ffffff'), 'number');
+        });
+
+        it('should calculate luminance', function() {
+            assert.equal(colour.checkLuminanceHex('#ffffff'), 254.99999999999997);
+            assert.equal(colour.checkLuminanceHex('#000000'), 0);
+            assert.equal(colour.checkLuminanceHex('#d90a1a'), 55.1634);
+        });
+
+        it('should handle shorthand', function() {
+            assert.equal(colour.checkLuminanceHex('#fff'), 254.99999999999997);
+            assert.equal(colour.checkLuminanceHex('#000'), 0);
+            assert.equal(colour.checkLuminanceHex('#d90'), 156.41019999999997);
+        });
+
+        it('should not require a hash', function() {
+            assert.equal(colour.checkLuminanceHex('d90'), 156.41019999999997);
+            assert.equal(colour.checkLuminanceHex('fff'), 254.99999999999997);
+            assert.equal(colour.checkLuminanceHex('ffffff'), 254.99999999999997);
+            assert.equal(colour.checkLuminanceHex('000'), 0);
+        });
+
+        it('should return null for unknown strings', function() {
+            assert.equal(colour.checkLuminanceHex('ffff'), null);
+            assert.equal(colour.checkLuminanceHex('chucknorris'), null);
+            assert.equal(colour.checkLuminanceHex('#fffffff'), null);
+            assert.equal(colour.checkLuminanceHex('#ff'), null);
+        });
+    });
+
+    describe('alterShade', function() {
+        it('should return a string', function() {
+            assert.equal(typeof colour.alterShade('#333', 0.4), 'string');
+        });
+
+        it('should change shade', function() {
+            assert.equal(colour.alterShade('#333333', 0.4), '#474747');
+            assert.equal(colour.alterShade('#999999', 0.4), '#d6d6d6');
+        });
+
+        it('should accept shorthand hex', function() {
+            assert.equal(colour.alterShade('#333', 0.4), '#474747');
+            assert.equal(colour.alterShade('#999', 0.4), '#d6d6d6');
+        });
+
+        it('should accept hex without hash', function() {
+            assert.equal(colour.alterShade('333', 0.4), '#474747');
+            assert.equal(colour.alterShade('333333', 0.4), '#474747');
+            assert.equal(colour.alterShade('999', 0.4), '#d6d6d6');
+            assert.equal(colour.alterShade('999999', 0.4), '#d6d6d6');
+        });
+
+        it('should accept 0 luminance values', function() {
+            assert.equal(colour.alterShade('#333', 0), '#333333');
+            assert.equal(colour.alterShade('#999', 0), '#999999');
+        });
+
+        it('should accept negative luminance values', function() {
+            assert.equal(colour.alterShade('#333', -0.4), '#1f1f1f');
+            assert.equal(colour.alterShade('#999', -0.4), '#5c5c5c');
+        });
+
+        it('should accept high luminance values', function() {
+            assert.equal(colour.alterShade('#333', 20), '#ffffff');
+            assert.equal(colour.alterShade('#999', 20), '#ffffff');
+            assert.equal(colour.alterShade('#333', -20), '#000000');
+            assert.equal(colour.alterShade('#999', -20), '#000000');
+        });
+
+        it('should throw error on incorrect values', function() {
+            assert.throws(colour.alterShade('not a real colour', 0.2), TypeError);
+            assert.throws(colour.alterShade('not a real colour', 'also broken'), TypeError);
         });
     });
 });
